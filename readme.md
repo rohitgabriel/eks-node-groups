@@ -1,4 +1,4 @@
-![](https://github.com/rohitgabriel/lb-asg-db-terraform-aws/workflows/Terraform/badge.svg)
+![](https://github.com/rohitgabriel/eks-node-groups/workflows/Terraform/badge.svg)
 ### Infrastructure and Application Deployment in AWS
 ![Provisioning diagram](https://eittestappbucket1.s3-ap-southeast-2.amazonaws.com/github-testapp.PNG)<br/>
 
