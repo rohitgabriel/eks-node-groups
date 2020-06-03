@@ -26,23 +26,11 @@ output "public_subnets" {
   value       = aws_subnet.public.*.id
 }
 
-output "lb_security_group_id" {
-  description = "The ID of the loadbalancer security group"
-  value       = aws_security_group.loadbalancer.id
+output "public_ip_nat_gateway" {
+  description = "List of IDs of Nat gateway IP's"
+  value       = aws_nat_gateway.public.*.public_ip
 }
 
-output "db_security_group_id" {
-  description = "The ID of the db security group"
-  value       = aws_security_group.postgresdb.id
-}
 
-output "egress_security_group_id" {
-  description = "The ID of the egress security group"
-  value       = aws_security_group.egress.id
-}
 
-output "appserver_security_group_id" {
-  description = "The ID of the appserver security group"
-  value       = aws_security_group.appserver.id
-}
 

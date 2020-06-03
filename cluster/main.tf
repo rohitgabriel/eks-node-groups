@@ -5,9 +5,9 @@ resource "aws_eks_cluster" "eks_cluster" {
     role_arn = aws_iam_role.eks_cluster_role.arn
 
     vpc_config {
-        endpoint_private_access = false
+        endpoint_private_access = true
         endpoint_public_access  = true
-        public_access_cidrs     = [ "0.0.0.0/0" ]
+        public_access_cidrs     = concat(var.public_ip_nat_gateway, var.allowed_iplist)
         security_group_ids = [
             aws_security_group.cluster_security_group.id
         ]

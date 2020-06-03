@@ -18,3 +18,13 @@ variable "id" {
   description = "VPC ID"
   type        = string
 }
+
+variable "allowed_iplist" {
+  type        = list
+  description = "home IP"
+}
+
+variable "public_ip_nat_gateway" {
+  type        = list
+  description = "Nat gateways from VPC"
+}
