@@ -8,16 +8,16 @@
     vpc_config {
         endpoint_private_access = false
         endpoint_public_access  = true
-        public_access_cidrs     = 0.0.0.0/0
+        public_access_cidrs     = [ "0.0.0.0/0" ]
         security_group_ids = [
-            aws_security_group.cluster_master_sg.id
+            aws_security_group.cluster_security_group.id
         ]
-        subnet_ids = module.vpc.private_subnets
+        subnet_ids = var.private_subnet_ids
     }
     depends_on = [
-    "aws_iam_role_policy_attachment.AmazonEKSClusterPolicy",
-    "aws_iam_role_policy_attachment.AmazonEKSServicePolicy",
-    "aws_cloudwatch_log_group.eks"
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.AmazonEKSServicePolicy,
+    aws_cloudwatch_log_group.eks
     ]
 
     enabled_cluster_log_types = ["api", "audit"]
@@ -75,8 +75,8 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
 #####
 resource "aws_security_group" "cluster_security_group" {
 
-    name = format("%s-cluster_security_group", var.cluster_name)
-    vpc_id = var.cluster_vpc.id
+    name = format("%s-cluster_security_group", var.app_name)
+    vpc_id = var.id
 
     egress {
         from_port   = 0
@@ -87,12 +87,12 @@ resource "aws_security_group" "cluster_security_group" {
     }
 
     tags = {
-        Name = format("%s-cluster_security_group", var.cluster_name)
+        Name = format("%s-cluster_security_group", var.app_name)
     }
 
 }
 
-resource "aws_security_group_rule" "cluster_ingress_https" {
+resource "aws_security_group_rule" "cluster_ingress_traffic" {
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = 443
     to_port     = 443

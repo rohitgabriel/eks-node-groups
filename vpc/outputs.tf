@@ -7,7 +7,7 @@
 output "id" {
   description = "The ID of the VPC"
   value       = aws_vpc.vpc_network_VPC.id
-#   value       = concat(aws_vpc.vpc_network_VPC.*.id, [""])[0]
+ # value       = concat(aws_vpc.vpc_network_VPC.*.id, [""])[0]
 }
 
 output "cidr_block" {

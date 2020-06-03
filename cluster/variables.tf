@@ -10,3 +10,11 @@ variable "eks_version" {
   default     = "1.16"
   description = "EKS version"
 }
+
+variable "private_subnet_ids" {
+  description = "EKS version"
+}
+
+variable "id" {
+  description = "VPC ID"
+}
