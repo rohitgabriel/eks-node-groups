@@ -24,6 +24,6 @@ module "vpc" {
 module "cluster" {
   source = "./cluster"
 
-  app_name = var.app_name
+  app_name    = var.app_name
   eks_version = var.eks_version
 }
