@@ -29,3 +29,15 @@ module "cluster" {
   private_subnet_ids = module.vpc.private_subnets
   id                 = module.vpc.id
 }
+
+module "nodegroup" {
+  source = "./nodegroup"
+
+  app_name           = var.app_name
+  instance_type      = var.instance_type
+  private_subnet_ids = module.vpc.private_subnets
+  id                 = module.vpc.id
+  cluster_name       = module.cluster.cluster_id
+  ebs_volume_size    = var.ebs_volume_size
+  nodegroup_ami_version = var.nodegroup_ami_version
+}

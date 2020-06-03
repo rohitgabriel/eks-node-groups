@@ -1,5 +1,4 @@
-
-  resource "aws_eks_cluster" "eks_cluster" {
+resource "aws_eks_cluster" "eks_cluster" {
 
     name    = var.app_name
     version = var.eks_version
