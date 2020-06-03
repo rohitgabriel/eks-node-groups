@@ -20,7 +20,7 @@ resource "aws_eks_node_group" "node_group" {
   ]
 
   tags = {
-      project = "${var.app_name}-managed-by-terraform",
+      Name = "${var.app_name}-managed-by-terraform",
       "kubernetes.io/cluster/${var.app_name}" = "owned"
       }
 }
