@@ -24,8 +24,8 @@ module "vpc" {
 module "cluster" {
   source = "./cluster"
 
-  app_name    = var.app_name
-  eks_version = var.eks_version
-  private_subnet_ids  = module.vpc.private_subnets
-  id = module.vpc.id
+  app_name           = var.app_name
+  eks_version        = var.eks_version
+  private_subnet_ids = module.vpc.private_subnets
+  id                 = module.vpc.id
 }
