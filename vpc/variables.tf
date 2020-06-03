@@ -36,6 +36,6 @@ variable "db_port" {
 
 variable "app_name" {
   type        = string
-  default     = "techtestapp"
+  default     = "eks"
   description = "Name of the application"
 }

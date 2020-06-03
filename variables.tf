@@ -46,3 +46,9 @@ variable "app_name" {
   description = "Name of the application"
 }
 
+variable "eks_version" {
+  type        = string
+  default     = "1.16"
+  description = "EKS version"
+}
+

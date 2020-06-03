@@ -31,7 +31,9 @@ resource "aws_subnet" "public" {
   availability_zone       = "${var.AWS_REGION}${var.availability_zones[count.index]}"
 
   tags = {
-    "Name" = "${var.app_name}_Public_${var.availability_zones[count.index]}"
+    "Name" = "${var.app_name}_Public_${var.availability_zones[count.index]}",
+    "kubernetes.io/role/elb" = 1,
+    "kubernetes.io/cluster/${var.app_name}" = "shared"
   }
 }
 
@@ -44,7 +46,9 @@ resource "aws_subnet" "private" {
   availability_zone       = "${var.AWS_REGION}${var.availability_zones[count.index]}"
 
   tags = {
-    "Name" = "${var.app_name}_Private_${var.availability_zones[count.index]}"
+    "Name" = "${var.app_name}_Private_${var.availability_zones[count.index]}",
+    "kubernetes.io/role/internal-elb" = 1,
+    "kubernetes.io/cluster/${var.app_name}" = "shared"
   }
 }
 
