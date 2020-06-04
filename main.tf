@@ -54,7 +54,7 @@ module "nodegroup" {
 resource "aws_security_group" "egress" {
   # vpc_id      = aws_vpc.vpc_network_VPC.id
   vpc_id      = module.vpc.id
-  name        = "${var.app_name}_egress_sg"
+  name        = "${var.app_name}_egress"
   description = "security group to allow all egress traffic"
   egress {
     from_port   = 0

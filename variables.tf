@@ -24,15 +24,15 @@ variable "app_name" {
 
 variable "eks_version" {
   type = string
-  # default     = "1.16"
-  default     = "1.15"
+  default     = "1.16"
+  # default     = "1.15"
   description = "EKS version"
 }
 
 variable "nodegroup_ami_version" {
   type = string
-  # default     = "1.16.8-20200507"
-  default     = "1.15.11-20200531"
+  default     = "1.16.8-20200507"
+  # default     = "1.15.11-20200531"
   description = "check https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html"
 }
 
