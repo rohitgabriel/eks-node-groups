@@ -44,7 +44,7 @@ variable "ssh_port" {
 
 variable "allowed_iplist" {
   type        = list
-  default     = ["163.47.223.200/32", "163.47.223.201/32"]
+  default     = ["163.47.223.200/32", "111.69.188.8/32"]
   description = "Nat gateways or home IP's"
 }
 

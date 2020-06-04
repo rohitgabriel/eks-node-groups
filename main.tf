@@ -70,7 +70,7 @@ resource "aws_security_group" "egress" {
 resource "aws_security_group" "public_subnets" {
 
   vpc_id      = module.vpc.id
-  name        = "${var.app_name}_lb"
+  name        = "${var.app_name}_ssh"
   description = "security group to allow inbound traffic on port ${var.ssh_port} from internet"
   # depends_on  = [aws_security_group.appserver]
   ingress {
@@ -94,7 +94,7 @@ resource "aws_security_group" "public_subnets" {
 resource "aws_security_group" "private_subnets" {
 
   vpc_id      = module.vpc.id
-  name        = "${var.app_name}_ingress_eks"
+  name        = "${var.app_name}_ingress_ssh"
   description = "security group to allow inbound traffic on port ${var.ssh_port} from public subnets"
   ingress {
     from_port       = var.ssh_port
