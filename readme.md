@@ -28,4 +28,4 @@ kubectl set image --namespace kube-system deployment.apps/coredns \
 Upgrade VPC CNI plugin:
 kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.6/config/v1.6/aws-k8s-cni.yaml
 
-
+Bug: https://github.com/terraform-providers/terraform-provider-aws/issues/12675

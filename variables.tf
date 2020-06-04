@@ -30,9 +30,9 @@ variable "eks_version" {
 }
 
 variable "nodegroup_ami_version" {
-  type    = string
-  default = "1.16.8-20200507"
-  # default     = "1.15.11-20200531"
+  type = string
+  # default = "1.16.8-20200507" can't upgrade coz of a bug in aws provider
+  default     = "1.15.11-20200531"
   description = "check https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html"
 }
 
