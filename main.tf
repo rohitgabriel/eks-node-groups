@@ -18,7 +18,10 @@ terraform {
 module "vpc" {
   source = "./vpc"
 
-  app_name = var.app_name
+  vpc_cidr  = var.vpc_cidr
+  app_name  = var.app_name
+  app_name2 = var.app_name
+
 }
 
 module "cluster" {

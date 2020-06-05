@@ -34,6 +34,7 @@ resource "aws_subnet" "public" {
     "Name" = "${var.app_name}_Public_${var.availability_zones[count.index]}",
     "kubernetes.io/role/elb" = 1,
     "kubernetes.io/cluster/${var.app_name}" = "shared"
+    "kubernetes.io/cluster/${var.app_name2}" = "shared"
   }
 }
 
@@ -49,6 +50,7 @@ resource "aws_subnet" "private" {
     "Name" = "${var.app_name}_Private_${var.availability_zones[count.index]}",
     "kubernetes.io/role/internal-elb" = 1,
     "kubernetes.io/cluster/${var.app_name}" = "shared"
+    "kubernetes.io/cluster/${var.app_name2}" = "shared"
   }
 }
 

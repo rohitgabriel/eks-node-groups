@@ -71,3 +71,9 @@ variable "max_size" {
   default     = 6
   description = "EKS nodegroup max size"
 }
+
+variable vpc_cidr {
+  type        = string
+  default     = "10.0.0.0/16"
+  description = "CIDR range to assign to the VPC"
+}
