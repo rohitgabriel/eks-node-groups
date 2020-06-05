@@ -7,6 +7,11 @@ aws eks --region ap-southeast-2 update-kubeconfig --name eks --kubeconfig kubeco
 https://docs.aws.amazon.com/eks/latest/userguide/eks-guestbook.html
 https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
 
+## Build EKS second cluster
+Add modules for cluster and nodegroup
+Add a subnet tag line in vpc
+Update new variable
+
 ## Upgrade Notes:
 Bump up the variables in this repo
 eks_version
