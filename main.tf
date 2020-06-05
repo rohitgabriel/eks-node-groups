@@ -48,6 +48,32 @@ module "nodegroup" {
   max_size                  = var.max_size
 }
 
+module "cluster2" {
+  source = "./cluster"
+
+  app_name              = var.app_name2
+  eks_version           = var.eks_version
+  private_subnet_ids    = module.vpc.private_subnets
+  id                    = module.vpc.id
+  public_ip_nat_gateway = module.vpc.public_ip_nat_gateway
+  allowed_iplist        = var.allowed_iplist
+}
+
+module "nodegroup2" {
+  source = "./nodegroup"
+
+  app_name                  = var.app_name2
+  instance_type             = var.instance_type
+  private_subnet_ids        = module.vpc.private_subnets
+  id                        = module.vpc.id
+  cluster_name              = module.cluster2.cluster_id
+  ebs_volume_size           = var.ebs_volume_size
+  nodegroup_ami_version     = var.nodegroup_ami_version
+  source_security_group_ids = [aws_security_group.public_subnets.id]
+  desired_size              = var.desired_size
+  min_size                  = var.min_size
+  max_size                  = var.max_size
+}
 #####
 # Security Groups
 #####

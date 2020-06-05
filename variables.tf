@@ -22,6 +22,12 @@ variable "app_name" {
   description = "Name of the application"
 }
 
+variable "app_name2" {
+  type        = string
+  default     = "eks2"
+  description = "Name of the application"
+}
+
 variable "eks_version" {
   type    = string
   default = "1.16"
