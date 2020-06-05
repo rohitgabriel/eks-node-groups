@@ -75,6 +75,6 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 # SSH keypair
 #####
 resource "aws_key_pair" "keypair" {
-  key_name   = "eks-key"
+  key_name   = var.app_name
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCPp5QTuE2+K+ds9QHAa41b6qxz66tCthfC+xhN123BUfyIcKvMZrFgMwS4XoRMkMxr/M4ocx+QiFvu8mS9euLu3hvAHyqv8htFDF1minj+sq47nJZNFGxzMvtZEGrjTd88DiDlYnjqZT+M2TsBRuuCKqq3C/+72bY1+ez36ulBfmLfGrgS/4CPWCg04/SDpgYmcHkZcIusvJzdAiPNfOfSuDN64gRgNKhx0KTnHcS214ZKoQ8AcvyWZAwd8LjxCOuE+ec7grInTKaM0nj5ah9GRlMqh4opPis/YG4QiQmkUqmrs+VG8EG9pSBe5t2u4uctwxBMYomEacIBy9OLHMvx postgrestest"
 }
