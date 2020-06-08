@@ -79,3 +79,20 @@ variable vpc_cidr {
   default     = "10.0.0.0/16"
   description = "CIDR range to assign to the VPC"
 }
+
+variable "efs_port" {
+  type        = string
+  default     = "2049"
+  description = "EKS nodegroup EFS port"
+}
+
+variable "enabled" {
+  type        = bool
+  default     = true
+  description = "Set to false to prevent the module from creating any resources"
+}
+
+# variable "security_groups" {
+#   type        = list(string)
+#   description = "Security group IDs to allow access to the EFS"
+# }

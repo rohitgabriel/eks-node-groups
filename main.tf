@@ -51,6 +51,16 @@ module "nodegroup" {
   max_size                  = var.max_size
 }
 
+module efs {
+  source = "./efs"
+
+  app_name           = var.app_name
+  region             = var.AWS_REGION
+  vpc_id             = module.vpc.id
+  subnets            = module.vpc.private_subnets
+  security_groups    = [aws_security_group.ingress_efs.id]
+}
+
 # module "cluster2" {
 #   source = "./cluster"
 
@@ -161,3 +171,27 @@ resource "aws_security_group" "private_subnets" {
 #     project = "${var.app_name}"
 #   }
 # }
+
+
+resource "aws_security_group" "ingress_efs" {
+   name = "ingress_efs_sg"
+   vpc_id = module.vpc.id
+
+   // NFS
+   ingress {
+     cidr_blocks = [var.vpc_cidr]
+     from_port = var.efs_port
+     to_port = var.efs_port
+     protocol = "tcp"
+   }
+
+   // Terraform removes the default rule
+   egress {
+     cidr_blocks = ["0.0.0.0/0"]
+     from_port = 0
+     to_port = 0
+     protocol = "-1"
+   }
+ }
+
+
