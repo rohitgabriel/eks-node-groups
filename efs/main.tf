@@ -19,14 +19,12 @@ resource "aws_efs_mount_target" "default" {
   count           = var.enabled && length(var.subnets) > 0 ? length(var.subnets) : 0
   file_system_id  = join("", aws_efs_file_system.default.*.id)
   subnet_id       = var.subnets[count.index]
-#   security_groups = [var.security_groups]
-#   security_groups = [join("", aws_security_group.efs.*.id)]
   security_groups = [join("", var.security_groups)]
 }
 
 resource "aws_efs_file_system_policy" "policy" {
   count                           = var.enabled ? 1 : 0
-  file_system_id = "${aws_efs_file_system.default[count.index].id}"
+  file_system_id = aws_efs_file_system.default[count.index].id
 
   policy = <<POLICY
 {

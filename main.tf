@@ -49,6 +49,7 @@ module "nodegroup" {
   desired_size              = var.desired_size
   min_size                  = var.min_size
   max_size                  = var.max_size
+  efs_arn                   = module.efs.efs_arn
 }
 
 module efs {

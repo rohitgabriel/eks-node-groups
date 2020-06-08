@@ -86,6 +86,12 @@ variable "efs_port" {
   description = "EKS nodegroup EFS port"
 }
 
+variable "efs_arn" {
+  type        = string
+  default     = ""
+  description = "EFS ARN"
+}
+
 variable "enabled" {
   type        = bool
   default     = true

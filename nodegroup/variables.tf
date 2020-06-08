@@ -52,3 +52,9 @@ variable "max_size" {
   type        = number
   description = "EKS nodegroup max size"
 }
+
+variable "efs_arn" {
+  type        = string
+  default     = ""
+  description = "EFS ARN"
+}
