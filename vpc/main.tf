@@ -18,8 +18,8 @@ resource "aws_vpc" "vpc_network_VPC" {
 locals {
   public_cidr_range = cidrsubnet(var.vpc_cidr, 2, 0)
   private_cidr_range = cidrsubnet(var.vpc_cidr, 2, 1)
-  app_name = "techtestapp"
-  app_name2 = "testapp"
+  app_name = var.app_name
+  app_name2 = var.app_name2
 }
 
 resource "aws_subnet" "public" {
@@ -33,7 +33,7 @@ resource "aws_subnet" "public" {
   tags = {
     "Name" = "${var.app_name}_Public_${var.availability_zones[count.index]}",
     "kubernetes.io/role/elb" = 1,
-    # "kubernetes.io/cluster/${var.app_name}" = "shared"
+    "kubernetes.io/cluster/${var.app_name}" = "shared"
     # "kubernetes.io/cluster/${var.app_name2}" = "shared"
   }
 }
@@ -49,7 +49,7 @@ resource "aws_subnet" "private" {
   tags = {
     "Name" = "${var.app_name}_Private_${var.availability_zones[count.index]}",
     "kubernetes.io/role/internal-elb" = 1,
-    # "kubernetes.io/cluster/${var.app_name}" = "shared"
+    "kubernetes.io/cluster/${var.app_name}" = "shared"
     # "kubernetes.io/cluster/${var.app_name2}" = "shared"
   }
 }
