@@ -1,21 +1,15 @@
+#####
+# Global 
+#####
 variable "AWS_REGION" {
   default     = "ap-southeast-2"
   description = "Set the AWS region"
   type        = string
 }
 
-variable "instance_type" {
-  default     = ["t3.medium"]
-  description = "Set the EC2 Instance type"
-  type        = list
-}
-
-variable "ebs_volume_size" {
-  default     = "50"
-  description = "Set the EBS volume size in GB"
-  type        = string
-}
-
+#####
+# EKS Cluster
+#####
 variable "app_name" {
   type        = string
   default     = "eks"
@@ -35,6 +29,26 @@ variable "eks_version" {
   description = "EKS version"
 }
 
+variable "allowed_iplist" {
+  type        = list
+  default     = ["163.47.223.200/32", "111.69.188.8/32", "202.180.77.121/32", "3.105.195.250/32"]
+  description = "Nat gateways or home IP's"
+}
+#####
+# EKS Nodegroups
+#####
+variable "instance_type" {
+  default     = ["t3.medium"]
+  description = "Set the EC2 Instance type"
+  type        = list
+}
+
+variable "ebs_volume_size" {
+  default     = "50"
+  description = "Set the EBS volume size in GB"
+  type        = string
+}
+
 variable "nodegroup_ami_version" {
   type = string
   # default = "1.16.8-20200507"
@@ -48,12 +62,6 @@ variable "ssh_port" {
   type        = string
   default     = "22"
   description = "EKS nodegroup ssh port"
-}
-
-variable "allowed_iplist" {
-  type        = list
-  default     = ["163.47.223.200/32", "111.69.188.8/32", "202.180.77.121/32", "3.105.195.250/32"]
-  description = "Nat gateways or home IP's"
 }
 
 variable "desired_size" {
@@ -74,12 +82,18 @@ variable "max_size" {
   description = "EKS nodegroup max size"
 }
 
+#####
+# VPC
+#####
 variable vpc_cidr {
   type        = string
   default     = "10.0.0.0/16"
   description = "CIDR range to assign to the VPC"
 }
 
+#####
+# EFS
+#####
 variable "efs_port" {
   type        = string
   default     = "2049"
@@ -97,8 +111,3 @@ variable "enabled" {
   default     = true
   description = "Set to false to prevent the module from creating any resources"
 }
-
-# variable "security_groups" {
-#   type        = list(string)
-#   description = "Security group IDs to allow access to the EFS"
-# }
