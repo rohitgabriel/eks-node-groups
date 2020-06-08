@@ -39,10 +39,3 @@ Bug: https://github.com/terraform-providers/terraform-provider-aws/issues/12675
 ----
 https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
 kubectl apply -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
-
-20s         Warning   FailedScheduling   pod/app2   pod has unbound immediate PersistentVolumeClaims (repeated 3 times)
-16s         Normal    Scheduled          pod/app2   Successfully assigned default/app2 to ip-10-0-85-128.ap-southeast-2.compute.internal
-7s          Warning   FailedMount        pod/app2   MountVolume.SetUp failed for volume "efs-pv1" : kubernetes.io/csi: mounter.SetupAt failed: rpc error: code = Internal desc = Could not mount "fs-c952b1f1:/" at "/var/lib/kubelet/pods/dc4ee7f5-3fd3-4d87-9701-608de801c3a8/volumes/kubernetes.io~csi/efs-pv1/mount": mount failed: exit status 32
-Mounting command: mount
-Mounting arguments: -t efs fs-c952b1f1:/ /var/lib/kubelet/pods/dc4ee7f5-3fd3-4d87-9701-608de801c3a8/volumes/kubernetes.io~csi/efs-pv1/mount
-Output: mount.nfs4: access denied by server while mounting fs-c952b1f1.efs.ap-southeast-2.amazonaws.com:/
