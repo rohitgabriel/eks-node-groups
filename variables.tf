@@ -31,7 +31,7 @@ variable "eks_version" {
 
 variable "allowed_iplist" {
   type        = list
-  default     = ["163.47.223.200/32", "111.69.188.8/32", "202.180.77.121/32", "3.105.195.250/32"]
+  default     = ["163.47.223.96/32", "111.69.188.8/32", "202.180.77.121/32", "3.105.195.250/32"]
   description = "Nat gateways or home IP's"
 }
 #####
