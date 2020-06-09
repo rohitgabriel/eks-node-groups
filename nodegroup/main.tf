@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "eks_nodegroup_role" {
 }
 
 resource "aws_iam_policy" "efs_policy" {
-  name        = "efs_policy"
+  name        = "efs_policy_${var.app_name}"
   path        = "/"
   description = "Policy for EKS nodes to mount filesystems from EFS"
   policy      = data.aws_iam_policy_document.efs_policy.json
