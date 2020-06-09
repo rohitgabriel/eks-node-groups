@@ -55,6 +55,5 @@ variable "max_size" {
 
 variable "efs_arn" {
   type        = string
-  default     = ""
   description = "EFS ARN"
 }
