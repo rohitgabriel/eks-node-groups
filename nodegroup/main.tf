@@ -27,6 +27,8 @@ resource "aws_eks_node_group" "node_group" {
   tags = {
       Name = "${var.app_name}-managed-by-terraform",
       "kubernetes.io/cluster/${var.app_name}" = "owned"
+      "k8s.io/cluster-autoscaler/${var.app_name}" = "owned"
+      "k8s.io/cluster-autoscaler/enabled" = "true"  
       }
 }
 
@@ -70,6 +72,31 @@ data "aws_iam_policy_document" "efs_policy" {
   }
 }
 
+resource "aws_iam_policy" "autoscaler_policy" {
+  name        = "autoscaler_policy_${var.app_name}"
+  path        = "/"
+  description = "Policy for nodegroups to call aws api"
+  policy      = data.aws_iam_policy_document.autoscaler_policy.json
+}
+
+data "aws_iam_policy_document" "autoscaler_policy" {
+  statement {
+    sid = "1"
+    actions = [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "ec2:DescribeLaunchTemplateVersions"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+}
+
 resource "aws_iam_role" "eks_nodegroup_role" {
   name = format("%s-eks-nodegroup-role", var.app_name)
   assume_role_policy = data.aws_iam_policy_document.eks_nodegroup_role.json
@@ -92,6 +119,11 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 
 resource "aws_iam_role_policy_attachment" "efs_policy" {
   policy_arn = aws_iam_policy.efs_policy.arn
+  role       = aws_iam_role.eks_nodegroup_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "autoscaler_policy" {
+  policy_arn = aws_iam_policy.autoscaler_policy.arn
   role       = aws_iam_role.eks_nodegroup_role.name
 }
 #####
