@@ -101,3 +101,7 @@ resource "aws_security_group_rule" "cluster_ingress_traffic" {
     security_group_id = aws_security_group.cluster_security_group.id
     type = "ingress"
 }
+
+data "aws_eks_cluster_auth" "eks_cluster" {
+  name = aws_eks_cluster.eks_cluster.name
+}

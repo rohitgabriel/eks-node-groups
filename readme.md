@@ -2,6 +2,8 @@
 
 ## Build EKS
 Uses Nodegroups<br/>
+Autoscaler works
+
 
 aws eks --region ap-southeast-2 update-kubeconfig --name eks --kubeconfig kubeconfig
 https://docs.aws.amazon.com/eks/latest/userguide/eks-guestbook.html
@@ -44,3 +46,10 @@ git clone https://github.com/kubernetes-sigs/aws-efs-csi-driver.git
 cd aws-efs-csi-driver/examples/kubernetes/multiple_pods/
 aws efs describe-file-systems --query "FileSystems[*].FileSystemId" --output text
 kubectl apply -f specs/
+---
+Autoscaler
+https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html
+
+---
+linkerd
+https://www.devopsfu.com/2020/01/17/automating-linkerd-installation-in-terraform/

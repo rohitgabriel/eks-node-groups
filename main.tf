@@ -24,6 +24,17 @@ module "vpc" {
 
 }
 
+
+module "helm_mariadb" {
+  source = "./helm/mariadb"
+
+}
+
+module "helm_linkerd" {
+  source = "./helm/linkerd"
+
+}
+
 module "cluster" {
   source = "./cluster"
 
