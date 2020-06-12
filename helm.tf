@@ -1,5 +1,5 @@
 provider "helm" {
-  version = "~>1.2.2"
+  version = "~> 1.2.2"
   debug   = true
   # alias   = "helm"
 
