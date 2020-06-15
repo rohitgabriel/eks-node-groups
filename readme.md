@@ -43,13 +43,17 @@ https://aws.amazon.com/premiumsupport/knowledge-center/eks-persistent-storage/
 https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
 kubectl apply -k "github.com/kubernetes-sigs/aws-efs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
 git clone https://github.com/kubernetes-sigs/aws-efs-csi-driver.git
+https://github.com/kubernetes-sigs/aws-efs-csi-driver/tree/master/examples/kubernetes/multiple_pods/specs
 cd aws-efs-csi-driver/examples/kubernetes/multiple_pods/
 aws efs describe-file-systems --query "FileSystems[*].FileSystemId" --output text
 kubectl apply -f specs/
 ---
 Autoscaler
 https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html
-
+https://github.com/helm/charts/tree/master/stable/cluster-autoscaler
+https://console.cloud.google.com/storage/browser/_details/kubernetes-charts
+https://aperogeek.fr/kubernetes-deployment-with-terraform/
+        automountServiceAccountToken = "true"
 ---
 linkerd
 https://www.devopsfu.com/2020/01/17/automating-linkerd-installation-in-terraform/

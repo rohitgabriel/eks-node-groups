@@ -52,7 +52,7 @@ variable "ebs_volume_size" {
 variable "nodegroup_ami_version" {
   type = string
   # default = "1.16.8-20200507"
-  default = "1.16.8-20200531"
+  default = "1.16.8-20200609"
   # can't upgrade from 1.15 coz of a bug in aws provider https://github.com/terraform-providers/terraform-provider-aws/issues/12675
   # default     = "1.15.11-20200531"
   description = "check https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html"
@@ -82,6 +82,11 @@ variable "max_size" {
   description = "EKS nodegroup max size"
 }
 
+variable "autoscaler_version" {
+  description = "Set the Autoscaler version"
+  default     = "asia.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v1.16.5"
+  type        = string
+}
 #####
 # VPC
 #####

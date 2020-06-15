@@ -3,6 +3,10 @@ provider "aws" {
   region  = var.AWS_REGION
 }
 
+provider "tls" {
+  version = ">= 2.1.1"
+}
+
 terraform {
   required_version = ">= 0.12"
 
@@ -23,17 +27,6 @@ module "vpc" {
   app_name2 = var.app_name2
 
 }
-
-
-# module "helm_mariadb" {
-#   source = "./helm/mariadb"
-
-# }
-
-# module "helm_linkerd" {
-#   source = "./helm/linkerd"
-
-# }
 
 module "cluster" {
   source = "./cluster"
@@ -72,6 +65,32 @@ module efs {
   subnets         = module.vpc.private_subnets
   security_groups = [aws_security_group.ingress_efs.id]
 }
+
+module "helm_mariadb" {
+  source = "./helm/mariadb"
+}
+
+module "helm_linkerd" {
+  source = "./helm/linkerd"
+}
+
+module "kubernetes_autoscaler" {
+  source             = "./kubernetes/autoscaler"
+  app_name           = var.app_name
+  AWS_REGION         = var.AWS_REGION
+  autoscaler_version = var.autoscaler_version
+}
+
+module "kubernetes_efs_storage_class" {
+  source           = "./kubernetes/storageclass"
+  efs_volumehandle = module.efs.efs_fs_id
+}
+# module "helm_autoscaler" {
+#   source = "./helm/cluster-autoscaler"
+
+#   AWS_REGION = var.AWS_REGION
+#   app_name   = var.app_name
+# }
 
 # module "cluster2" {
 #   source = "./cluster"
