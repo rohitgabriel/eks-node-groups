@@ -28,63 +28,63 @@ module "vpc" {
 
 }
 
-# module "cluster" {
-#   source = "./cluster"
+module "cluster" {
+  source = "./cluster"
 
-#   app_name              = var.app_name
-#   eks_version           = var.eks_version
-#   private_subnet_ids    = module.vpc.private_subnets
-#   id                    = module.vpc.id
-#   public_ip_nat_gateway = module.vpc.public_ip_nat_gateway
-#   allowed_iplist        = var.allowed_iplist
-# }
+  app_name              = var.app_name
+  eks_version           = var.eks_version
+  private_subnet_ids    = module.vpc.private_subnets
+  id                    = module.vpc.id
+  public_ip_nat_gateway = module.vpc.public_ip_nat_gateway
+  allowed_iplist        = var.allowed_iplist
+}
 
-# module "nodegroup" {
-#   source = "./nodegroup"
+module "nodegroup" {
+  source = "./nodegroup"
 
-#   app_name                  = var.app_name
-#   instance_type             = var.instance_type
-#   private_subnet_ids        = module.vpc.private_subnets
-#   id                        = module.vpc.id
-#   cluster_name              = module.cluster.cluster_id
-#   ebs_volume_size           = var.ebs_volume_size
-#   nodegroup_ami_version     = var.nodegroup_ami_version
-#   source_security_group_ids = [aws_security_group.public_subnets.id]
-#   desired_size              = var.desired_size
-#   min_size                  = var.min_size
-#   max_size                  = var.max_size
-#   efs_arn                   = module.efs.efs_arn
-# }
+  app_name                  = var.app_name
+  instance_type             = var.instance_type
+  private_subnet_ids        = module.vpc.private_subnets
+  id                        = module.vpc.id
+  cluster_name              = module.cluster.cluster_id
+  ebs_volume_size           = var.ebs_volume_size
+  nodegroup_ami_version     = var.nodegroup_ami_version
+  source_security_group_ids = [aws_security_group.public_subnets.id]
+  desired_size              = var.desired_size
+  min_size                  = var.min_size
+  max_size                  = var.max_size
+  efs_arn                   = module.efs.efs_arn
+}
 
-# module efs {
-#   source = "./efs"
+module efs {
+  source = "./efs"
 
-#   app_name        = var.app_name
-#   region          = var.AWS_REGION
-#   vpc_id          = module.vpc.id
-#   subnets         = module.vpc.private_subnets
-#   security_groups = [aws_security_group.ingress_efs.id]
-# }
+  app_name        = var.app_name
+  region          = var.AWS_REGION
+  vpc_id          = module.vpc.id
+  subnets         = module.vpc.private_subnets
+  security_groups = [aws_security_group.ingress_efs.id]
+}
 
-# module "helm_mariadb" {
-#   source = "./helm/mariadb"
-# }
+module "helm_mariadb" {
+  source = "./helm/mariadb"
+}
 
-# module "helm_linkerd" {
-#   source = "./helm/linkerd"
-# }
+module "helm_linkerd" {
+  source = "./helm/linkerd"
+}
 
-# module "kubernetes_autoscaler" {
-#   source             = "./kubernetes/autoscaler"
-#   app_name           = var.app_name
-#   AWS_REGION         = var.AWS_REGION
-#   autoscaler_version = var.autoscaler_version
-# }
+module "kubernetes_autoscaler" {
+  source             = "./kubernetes/autoscaler"
+  app_name           = var.app_name
+  AWS_REGION         = var.AWS_REGION
+  autoscaler_version = var.autoscaler_version
+}
 
-# module "kubernetes_efs_storage_class" {
-#   source           = "./kubernetes/storageclass"
-#   efs_volumehandle = module.efs.efs_fs_id
-# }
+module "kubernetes_efs_storage_class" {
+  source           = "./kubernetes/storageclass"
+  efs_volumehandle = module.efs.efs_fs_id
+}
 
 
 #####
