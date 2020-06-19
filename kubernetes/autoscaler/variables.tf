@@ -12,3 +12,8 @@ variable "autoscaler_version" {
   description = "Set the Autoscaler version"
   type        = string
 }
+
+variable "kube_depends_on" {
+  description = "Dummy variable to invoke dependency"
+  type        = list
+}
