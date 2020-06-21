@@ -66,16 +66,16 @@ module efs {
   security_groups = [aws_security_group.ingress_efs.id]
 }
 
-module "helm_mariadb" {
-  source = "./helm/mariadb"
+# module "helm_mariadb" {
+#   source = "./helm/mariadb"
 
-  helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
-}
+#   helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+# }
 
 module "helm_linkerd" {
   source = "./helm/linkerd"
 
-  helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+  helm_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
 module "kubernetes_autoscaler" {
@@ -84,14 +84,14 @@ module "kubernetes_autoscaler" {
   AWS_REGION         = var.AWS_REGION
   autoscaler_version = var.autoscaler_version
 
-  kube_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+  kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
 module "kubernetes_efs_storage_class" {
   source           = "./kubernetes/storageclass"
   efs_volumehandle = module.efs.efs_fs_id
 
-  kube_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+  kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
 

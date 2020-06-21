@@ -44,7 +44,7 @@ variable "instance_type" {
 }
 
 variable "ebs_volume_size" {
-  default     = "50"
+  default     = "60"
   description = "Set the EBS volume size in GB"
   type        = string
 }
