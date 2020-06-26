@@ -10,21 +10,3 @@ provider "helm" {
     load_config_file       = false
   }
 }
-#############
-# resource "helm_release" "mydatabase" {
-#   provider  = helm.helm
-#   name      = "mydatabase"
-#   chart     = "mariadb"
-#   namespace = "default"
-#   repository = "https://kubernetes-charts.storage.googleapis.com"
-
-#   set {
-#     name  = "mariadbUser"
-#     value = "foooo"
-#   }
-
-#   set {
-#     name  = "mariadbPassword"
-#     value = "qux"
-#   }
-# }

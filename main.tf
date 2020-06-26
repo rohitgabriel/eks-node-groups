@@ -39,6 +39,15 @@ module "cluster" {
   allowed_iplist        = var.allowed_iplist
 }
 
+module "kubernetes_awsauth" {
+  source           = "./kubernetes/aws-auth"
+  iam_instance_arn = module.nodegroup.iam_instance_arn
+  aws_account_id   = var.aws_account_id
+  aws_devops_user  = var.aws_devops_user
+
+  kube_depends_on = [module.cluster.endpoint]
+}
+
 module "nodegroup" {
   source = "./nodegroup"
 
@@ -66,11 +75,11 @@ module efs {
   security_groups = [aws_security_group.ingress_efs.id]
 }
 
-# module "helm_mariadb" {
-#   source = "./helm/mariadb"
+# # module "helm_mariadb" {
+# #   source = "./helm/mariadb"
 
-#   helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
-# }
+# #   helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+# # }
 
 module "helm_linkerd" {
   source = "./helm/linkerd"
@@ -94,6 +103,12 @@ module "kubernetes_efs_storage_class" {
   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
+# module "kubernetes_consul" {
+#   source           = "./kubernetes/consul"
+#   app_name           = var.app_name
+
+#   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+# }
 
 #####
 

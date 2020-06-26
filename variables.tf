@@ -87,6 +87,18 @@ variable "autoscaler_version" {
   default     = "asia.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v1.16.5"
   type        = string
 }
+
+variable "aws_account_id" {
+  description = "AWS account id"
+  default     = "793916195974"
+  type        = string
+}
+
+variable "aws_devops_user" {
+  description = "AWS devops user"
+  default     = "Administrator"
+  type        = string
+}
 #####
 # VPC
 #####
