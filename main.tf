@@ -103,12 +103,13 @@ module "kubernetes_efs_storage_class" {
   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
-# module "kubernetes_consul" {
-#   source           = "./kubernetes/consul"
-#   app_name           = var.app_name
+module "kubernetes_consul" {
+  source   = "./kubernetes/consul"
+  app_name = var.app_name
+  #aws_auth         = module.kubernetes.aws-auth.aws_auth_uid
 
-#   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
-# }
+  kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+}
 
 #####
 

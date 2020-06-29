@@ -7,25 +7,42 @@ resource "kubernetes_storage_class" "efs" {
 }
 
 # There is currently no persistent volume source available for EFS as terraform resource
-# resource "kubernetes_persistent_volume" "efs-pv" {
-#   metadata {
-#     name = "efs-pv"
-#   }
-#   spec {
-#     capacity = {
-#       storage = "2Gi"
-#     }
-#     access_modes = ["ReadWriteMany"]
-#     persistent_volume_reclaim_policy = "Retain"
-#     storage_class_name = "efs-sc"
-#     persistent_volume_source {
-#       vsphere_volume {
-#         volume_path = "/absolute/path"
-#       }
-#     }
-#     # csi = {
-#     #     driver = "efs.csi.aws.com"
-#     #     volumeHandle = var.efs_volumehandle
-#     # }
-#   }
-# }
+resource "kubernetes_persistent_volume" "efs-pv" {
+  metadata {
+    name = "efs-pv"
+  }
+  spec {
+    capacity = {
+      storage = "5Gi"
+    }
+    access_modes = ["ReadWriteMany"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name = "efs-sc"
+    persistent_volume_source {
+      nfs {
+        server = "fs-1600ec2e.efs.ap-southeast-2.amazonaws.com"
+        path   = "/efs"
+      }
+    }
+  }
+}
+
+resource "kubernetes_persistent_volume" "efs-pv-consulconfig" {
+  metadata {
+    name = "efs-pv-consulconfig"
+  }
+  spec {
+    capacity = {
+      storage = "5Gi"
+    }
+    access_modes = ["ReadWriteMany"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name = "efs-sc"
+    persistent_volume_source {
+      nfs {
+        server = "fs-1600ec2e.efs.ap-southeast-2.amazonaws.com"
+        path   = "/efs-consulconfig"
+      }
+    }
+  }
+}

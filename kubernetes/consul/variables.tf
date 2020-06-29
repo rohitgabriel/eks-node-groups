@@ -7,3 +7,8 @@ variable "app_name" {
   type        = string
   description = "Name of the application"
 }
+
+# variable "aws_auth" {
+#   type        = string
+#   description = "aws auth"
+# }
