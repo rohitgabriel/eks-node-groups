@@ -47,6 +47,8 @@ https://github.com/kubernetes-sigs/aws-efs-csi-driver/tree/master/examples/kuber
 cd aws-efs-csi-driver/examples/kubernetes/multiple_pods/
 aws efs describe-file-systems --query "FileSystems[*].FileSystemId" --output text
 kubectl apply -f specs/
+
+ROADBLOCKER!! https://github.com/hashicorp/terraform-provider-kubernetes/issues/296
 ---
 Autoscaler
 https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html

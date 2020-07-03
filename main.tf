@@ -96,6 +96,12 @@ module "kubernetes_autoscaler" {
   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
+module "helm_efs_csi_driver" {
+  source             = "./helm/aws-efs-csi-driver"
+
+  helm_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
+}
+
 module "kubernetes_efs_storage_class" {
   source           = "./kubernetes/storageclass"
   efs_volumehandle = module.efs.efs_fs_id
@@ -106,11 +112,18 @@ module "kubernetes_efs_storage_class" {
 module "kubernetes_consul" {
   source   = "./kubernetes/consul"
   app_name = var.app_name
+  efs_sc_name = module.kubernetes_efs_storage_class.efs_sc_name
   #aws_auth         = module.kubernetes.aws-auth.aws_auth_uid
 
   kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
 }
 
+module "kubernetes_vault" {
+  source     = "./kubernetes/vault"
+  AWS_REGION = var.AWS_REGION
+
+  kube_depends_on = [module.cluster.endpoint, module.nodegroup.nodegroup_id, module.kubernetes_consul.generation]
+}
 #####
 
 # module "helm_autoscaler" {

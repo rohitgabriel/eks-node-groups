@@ -119,34 +119,74 @@ resource "kubernetes_config_map" "consul" {
 #   depends_on = [var.aws_auth]
 }
 
-resource "kubernetes_persistent_volume_claim" "consul_config" {
+# resource "kubernetes_persistent_volume_claim" "consul_config" {
+#   metadata {
+#     name = "consulconfig"
+#     namespace = "vault"
+#   }
+#   spec {
+#     access_modes = ["ReadWriteMany"]
+#     resources {
+#       requests = {
+#         storage = "1Gi"
+#       }
+#     }
+#     storage_class_name = "efs-sc"
+#     volume_name = "efs-pv-consulconfig"
+#   }
+# }
+# resource "kubernetes_persistent_volume_claim" "consul_tls" {
+#   metadata {
+#     name = "consultlscerts"
+#     namespace = "vault"
+#   }
+#   spec {
+#     access_modes = ["ReadWriteMany"]
+#     resources {
+#       requests = {
+#         storage = "1Gi"
+#       }
+#     }
+#     storage_class_name = "efs-sc"
+#     volume_name = "efs-pv"
+#   }
+# }
+
+
+resource "kubernetes_persistent_volume" "efs-pv-consul-data" {
   metadata {
-    name = "consulconfig"
+    name = "efs-pv-consul-data"
   }
   spec {
+    capacity = {
+      storage = "5Gi"
+    }
     access_modes = ["ReadWriteMany"]
-    resources {
-      requests = {
-        storage = "1Gi"
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name = "efs-sc"
+    persistent_volume_source {
+      nfs {
+        server = "fs-1600ec2e.efs.ap-southeast-2.amazonaws.com"
+        path   = "/consul/data"
       }
     }
-    storage_class_name = "efs-sc"
-    volume_name = "efs-pv-consulconfig"
   }
 }
-resource "kubernetes_persistent_volume_claim" "consul_tls" {
+resource "kubernetes_persistent_volume_claim" "consul_data" {
   metadata {
-    name = "consultlscerts"
+    name = "consul-data"
+    namespace = "vault"
   }
   spec {
     access_modes = ["ReadWriteMany"]
     resources {
       requests = {
-        storage = "1Gi"
+        storage = "5Gi"
       }
     }
-    storage_class_name = "efs-sc"
-    volume_name = "efs-pv"
+
+    storage_class_name = var.efs_sc_name
+    volume_name = kubernetes_persistent_volume.efs-pv-consul-data.metadata[0].name
   }
 }
 # CONSUL SERVICE to expose each of the Consul members internally
@@ -298,6 +338,11 @@ resource "kubernetes_stateful_set" "consul" {
           }
 
           volume_mount {
+            name       = "consul-data"
+            mount_path = "/consul/data"
+          }
+
+          volume_mount {
             name       = "tls"
             mount_path = "/etc/tls"
           }
@@ -371,8 +416,32 @@ resource "kubernetes_stateful_set" "consul" {
             secret_name = "consul"
           }
         }
+        volume {
+          name = "consul-data"
+
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.consul_data.metadata[0].name
+          }
+        }
       }
     }
+    # volume_claim_template {
+    #   metadata {
+    #     name = "consul-data"
+    #   }
+
+    #   spec {
+    #     access_modes       = ["ReadWriteMany"]
+    #     storage_class_name = "efs-sc"
+    #     volume_name = "efs-pv-consul-data"
+
+    #     resources {
+    #       requests = {
+    #         storage = "4Gi"
+    #       }
+    #     }
+    #   }
+    # }
   }
 
   depends_on = [kubernetes_service.consul]
