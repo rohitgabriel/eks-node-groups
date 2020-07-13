@@ -75,12 +75,6 @@ module efs {
   security_groups = [aws_security_group.ingress_efs.id]
 }
 
-# # module "helm_mariadb" {
-# #   source = "./helm/mariadb"
-
-# #   helm_depends_on  = [module.cluster.endpoint, module.nodegroup.nodegroup_id]
-# # }
-
 module "helm_linkerd" {
   source = "./helm/linkerd"
 
@@ -126,12 +120,6 @@ module "kubernetes_vault" {
 }
 #####
 
-# module "helm_autoscaler" {
-#   source = "./helm/cluster-autoscaler"
-
-#   AWS_REGION = var.AWS_REGION
-#   app_name   = var.app_name
-# }
 
 # module "cluster2" {
 #   source = "./cluster"
